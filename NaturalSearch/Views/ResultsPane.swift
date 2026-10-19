@@ -136,3 +136,9 @@ private struct ResultContextMenu: View {
         }
     }
 }
+
+#Preview {
+    ResultsPane()
+        .environment(SearchModel())
+        .frame(width: 600, height: 500)
+}

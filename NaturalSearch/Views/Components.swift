@@ -144,3 +144,25 @@ struct FileIcon: View {
             .frame(width: size, height: size)
     }
 }
+
+#Preview {
+    VStack(spacing: 16) {
+        PaneHeader(title: "Resultate") {
+            Button {} label: { Image(systemName: "plus") }
+                .buttonStyle(.square)
+        }
+        InfoCard {
+            HStack {
+                FileIcon(url: URL(fileURLWithPath: "/Applications"), size: 32)
+                Text("Programme")
+            }
+        }
+        FlowLayout {
+            ForEach(TagColor.allCases, id: \.self) { tag in
+                Circle().fill(tag.color).frame(width: 14, height: 14)
+            }
+        }
+    }
+    .padding()
+    .frame(width: 400)
+}

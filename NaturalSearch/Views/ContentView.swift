@@ -190,3 +190,9 @@ private struct StatusBar: View {
         .background(PaneStyle.headerBackground)
     }
 }
+
+#Preview {
+    ContentView()
+        .environment(SearchModel())
+        .frame(width: 1500, height: 900)
+}

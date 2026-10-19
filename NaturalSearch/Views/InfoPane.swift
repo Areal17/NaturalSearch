@@ -217,3 +217,9 @@ private struct SummaryTab: View {
         .frame(maxHeight: .infinity, alignment: .top)
     }
 }
+
+#Preview {
+    InfoPane()
+        .environment(SearchModel())
+        .frame(width: 430, height: 700)
+}

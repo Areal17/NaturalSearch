@@ -125,3 +125,14 @@ private struct ExtensionField: View {
         .overlay(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.primary.opacity(0.15)))
     }
 }
+
+#Preview {
+    @Previewable @State var criteria = SearchCriterion.defaultSet
+    VStack(spacing: 8) {
+        ForEach($criteria) { $criterion in
+            CriterionRow(criterion: $criterion, canRemove: criteria.count > 1, onAdd: {}, onRemove: {}, onDuplicate: {})
+        }
+    }
+    .padding()
+    .frame(width: 560)
+}

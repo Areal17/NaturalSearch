@@ -203,3 +203,9 @@ private struct LimitSection: View {
         .buttonSizing(.flexible)
     }
 }
+
+#Preview {
+    RefinePane()
+        .environment(SearchModel())
+        .frame(width: 560, height: 800)
+}
