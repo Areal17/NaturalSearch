@@ -1,0 +1,19 @@
+{
+  "" : {
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/NaturalSearchTests-primary.dia",
+    "emit-module-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/NaturalSearchTests-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/NaturalSearchTests-primary-emit-module.dia",
+    "pch" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/NaturalSearchTests-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/NaturalSearchTests-primary.swiftdeps"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearchTests/PredicateBuilderTests.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearchTests.build/Objects-normal/arm64/PredicateBuilderTests~partial.swiftmodule"
+  }
+}

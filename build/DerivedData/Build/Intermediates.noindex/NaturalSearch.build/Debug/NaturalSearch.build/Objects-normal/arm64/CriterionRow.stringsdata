@@ -1,0 +1,128 @@
+{
+  "source": "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/CriterionRow.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Attribut",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Operator",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Wert",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inhaltsart",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Wert",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Zeile entfernen",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Zeile hinzufügen",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Optionen",
+        "location": {
+          "startingColumn": 15,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nicht (Bedingung umkehren)",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Groß-/Kleinschreibung beachten",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Diakritische Zeichen beachten",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Zeile duplizieren",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Endung",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 105
+        }
+      }
+    ]
+  },
+  "version": 1
+}

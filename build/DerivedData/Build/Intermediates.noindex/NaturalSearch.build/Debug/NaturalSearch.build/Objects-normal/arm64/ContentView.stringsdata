@@ -1,0 +1,112 @@
+{
+  "source": "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Verfeinern ein-/ausblenden",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Letzte Anfragen",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Noch keine Anfragen",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verfeinern",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nur Resultate",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Info",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Suche zurücksetzen",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spotlight-Abfrage kopieren",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Im Finder zeigen",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Anfrage mit Apple Intelligence interpretieren",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Suchen",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Suche",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Suchmodus",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 142
+        }
+      }
+    ]
+  },
+  "version": 1
+}

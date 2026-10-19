@@ -1,0 +1,199 @@
+{
+  "" : {
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearch-primary.dia",
+    "emit-module-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearch-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearch-primary-emit-module.dia",
+    "pch" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearch-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearch-primary.swiftdeps"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/AI/FileSearchQuery.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/FileSearchQuery~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/AI/QueryParser.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/QueryParser~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/AI/ResultSummarizer.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultSummarizer~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/App/NaturalSearchApp.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/NaturalSearchApp~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/App/SearchModel.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchModel~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Models/ContentKind.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentKind~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Models/SearchCriterion.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchCriterion~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Models/SearchOptions.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchOptions~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Models/SearchResult.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SearchResult~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Models/TagColor.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/TagColor~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Search/LocationStore.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/LocationStore~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Search/PredicateBuilder.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/PredicateBuilder~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Search/SpotlightSearch.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/SpotlightSearch~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/Components.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/Components~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/ContentView.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/CriterionRow.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/CriterionRow~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/InfoPane.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/InfoPane~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/RefinePane.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/RefinePane~partial.swiftmodule"
+  },
+  "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/ResultsPane.swift" : {
+    "const-values" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.swiftconstvalues",
+    "dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.d",
+    "diagnostics" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.dia",
+    "index-unit-output-path" : "/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.o",
+    "llvm-bc" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.bc",
+    "object" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.o",
+    "swift-dependencies" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane.swiftdeps",
+    "swiftmodule" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/NaturalSearch.build/Debug/NaturalSearch.build/Objects-normal/arm64/ResultsPane~partial.swiftmodule"
+  }
+}

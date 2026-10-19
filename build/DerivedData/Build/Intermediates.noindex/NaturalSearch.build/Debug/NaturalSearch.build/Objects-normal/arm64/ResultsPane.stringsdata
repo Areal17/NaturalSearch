@@ -1,0 +1,136 @@
+{
+  "source": "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/ResultsPane.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Darstellung",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sortierung",
+        "location": {
+          "startingColumn": 15,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spotlight sortiert nach",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reihenfolge",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spaltensortierung aufheben",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Zuletzt %@",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neueste zuerst",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Älteste zuerst",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Name",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Art",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Änderungsdatum",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Größe",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Öffnen",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "Im Finder zeigen",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pfad kopieren",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mit Apple Intelligence zusammenfassen",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 130
+        }
+      }
+    ]
+  },
+  "version": 1
+}

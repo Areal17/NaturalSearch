@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'NaturalSearchTests' in project 'NaturalSearch'
+➜ Explicit dependency on target 'NaturalSearch' in project 'NaturalSearch'
+Target 'NaturalSearch' in project 'NaturalSearch' (no dependencies)

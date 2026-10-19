@@ -1,0 +1,24 @@
+{
+  "source": "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/App/NaturalSearchApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "NaturalSearch",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 8
+        }
+      },
+      {
+        "comment": "",
+        "key": "Suche zurücksetzen",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 15
+        }
+      }
+    ]
+  },
+  "version": 1
+}

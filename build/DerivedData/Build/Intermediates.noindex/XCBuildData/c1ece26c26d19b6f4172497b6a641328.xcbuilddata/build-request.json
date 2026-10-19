@@ -1,0 +1,66 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildAndRun"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "affc661b17e6b274f83aee4673a6873b693100ca5b1403bb727548d605e0df00"
+    },
+    {
+      "guid" : "affc661b17e6b274f83aee4673a6873b474c82d7ade7ef10a993c5f8aec8cd20"
+    }
+  ],
+  "containerPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "hostTargetedPlatform" : null,
+      "platform" : "macosx",
+      "sdk" : "macosx27.0",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "arm64e",
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Products",
+      "derivedDataPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/build/DerivedData/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "test",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

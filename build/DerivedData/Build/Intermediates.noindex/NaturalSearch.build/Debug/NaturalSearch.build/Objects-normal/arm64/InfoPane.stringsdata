@@ -1,0 +1,64 @@
+{
+  "source": "/Users/ingowie/Projekte/MacOS-Programme/NaturalSearch/Code/NaturalSearch/Views/InfoPane.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Ansicht",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tags",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Wähle genau einen Treffer aus.",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Keine Vorschau",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Treffer zusammenfassen",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auswahl zusammenfassen",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stopp",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 197
+        }
+      }
+    ]
+  },
+  "version": 1
+}
