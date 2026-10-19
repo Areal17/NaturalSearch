@@ -10,7 +10,8 @@ final class QueryParser {
 
         Beispiele:
         „PDFs über Rechnungen vom letzten Monat“ → keywords: [Rechnung], extensions: [pdf], days: 31, dateField: modified
-        „Fotos vom Urlaub in Italien“ → keywords: [Urlaub, Italien], contentKind: image
+        „PDFs über Machine Learning“ → keywords: [Machine, Learning], extensions: [pdf], days: 0
+        „Fotos vom Urlaub in Italien“ → keywords: [Urlaub, Italien], contentKind: image, days: 0
         „Word-Dateien, die ich gestern geöffnet habe“ → extensions: [docx, doc], days: 2, dateField: opened
         „Präsentationen im Downloads-Ordner“ → contentKind: presentation, scope: Downloads
         „Dateien mit rotem Tag“ → tags: [red]
@@ -47,7 +48,7 @@ final class QueryParser {
             options: GenerationOptions(samplingMode: .greedy)
         )
         prewarm()
-        return response.content.normalized()
+        return response.content.normalized(request: request)
     }
 }
 

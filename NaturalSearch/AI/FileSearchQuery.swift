@@ -39,8 +39,32 @@ enum DateField: String, Sendable {
 extension FileSearchQuery {
     private static let fillerWords: Set<String> = ["datei", "dateien", "dokument", "dokumente", "file", "files"]
 
-    /// Bereinigt typische Fehler des kleinen Modells (Endungen als Schlüsselwort, Punkte, Dubletten).
-    func normalized() -> FileSearchQuery {
+    /// Wortanfänge, an denen sich eine Zeitangabe in der Anfrage erkennen lässt.
+    private static let timeWordPrefixes = [
+        "heute", "gestern", "vorgestern", "tag", "woche", "monat", "quartal", "jahr", "letzt", "vorig",
+        "seit", "neulich", "kürzlich", "jüngst", "zuletzt", "neueste", "aktuell",
+        "today", "yesterday", "day", "week", "month", "quarter", "year", "last", "recent", "since",
+    ]
+
+    /// Monatsnamen als ganze Wörter („Mai“ soll nicht auf „Mail“ passen).
+    private static let monthNames: Set<String> = [
+        "januar", "februar", "märz", "april", "mai", "juni", "juli", "august", "september", "oktober",
+        "november", "dezember",
+    ]
+
+    /// `true`, wenn die Anfrage überhaupt einen Zeitraum nennt (Wort, Monat oder Jahreszahl).
+    static func mentionsTime(_ request: String) -> Bool {
+        let words = request.lowercased().split { !$0.isLetter && !$0.isNumber }.map(String.init)
+        return words.contains { word in
+            (word.count == 4 && word.allSatisfy(\.isNumber))
+                || monthNames.contains(word)
+                || timeWordPrefixes.contains { word.hasPrefix($0) }
+        }
+    }
+
+    /// Bereinigt typische Fehler des kleinen Modells (Endungen als Schlüsselwort, Punkte, Dubletten,
+    /// erfundene Zeiträume). Mit `request` werden Angaben verworfen, die nicht in der Anfrage stehen.
+    func normalized(request: String? = nil) -> FileSearchQuery {
         var copy = self
         copy.extensions = Array(Set(extensions.map { $0.trimmingCharacters(in: CharacterSet(charactersIn: ". ")).lowercased() }))
             .filter { !$0.isEmpty }
@@ -50,7 +74,10 @@ extension FileSearchQuery {
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty && !blocked.contains($0.lowercased()) }
         copy.nameKeywords = nameKeywords.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
-        if copy.extensions == ["pdf"], copy.contentKind == .pdf { copy.contentKind = .any }
+        // Eine konkrete Endung ist genauer als die Inhaltsart; beides zusammen widerspricht sich oft.
+        if !copy.extensions.isEmpty { copy.contentKind = .any }
+        // Das Modell setzt gern days = 1, obwohl die Anfrage keinen Zeitraum nennt.
+        if let request, copy.days > 0, !Self.mentionsTime(request) { copy.days = 0 }
         copy.scope = scope.trimmingCharacters(in: .whitespaces)
         return copy
     }

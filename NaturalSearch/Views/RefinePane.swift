@@ -24,8 +24,8 @@ struct RefinePane: View {
                 PaneHeader(title: "Orte")
                 section { LocationsSection() }
 
-                PaneHeader(title: "Tags")
-                section { TagsSection() }.padding(.vertical, 8)
+//                PaneHeader(title: "Tags")
+//                section { TagsSection() }.padding(.vertical, 8)
 
                 PaneHeader(title: "Limit")
                 section { LimitSection() }
