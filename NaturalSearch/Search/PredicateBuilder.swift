@@ -51,9 +51,9 @@ enum PredicateBuilder {
         case .name, .textContent, .author, .comment:
             return stringClause(keys(for: criterion.attribute), value: value, criterion: criterion)
         case .fileExtension:
-            return extensionClause(value, negated: criterion.isNegated)
+            return extensionClause(value, negated: excludes(criterion))
         case .contentKind:
-            return anyOf(Key.contentTypeTree, values: criterion.contentKind.contentTypes, negated: criterion.isNegated)
+            return anyOf(Key.contentTypeTree, values: criterion.contentKind.contentTypes, negated: excludes(criterion))
         case .modified, .created, .lastOpened:
             return dateClause(keys(for: criterion.attribute)[0], days: Int(value) ?? 0, criterion: criterion)
         case .size:
@@ -153,6 +153,11 @@ enum PredicateBuilder {
     }
 
     // MARK: - Hilfsfunktionen
+
+    /// „ist nicht“ schließt aus; die Option „Nicht“ kehrt das zusätzlich um.
+    private static func excludes(_ criterion: SearchCriterion) -> Bool {
+        (criterion.op == .notEquals) != criterion.isNegated
+    }
 
     /// Vergleicht mehrere Attribute: positiv mit ODER, negiert (De Morgan) mit UND.
     private static func compare(_ keys: [String], pattern: String, modifiers: String, negated: Bool) -> String {

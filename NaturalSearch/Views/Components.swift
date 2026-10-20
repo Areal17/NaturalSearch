@@ -38,7 +38,7 @@ struct SquareButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 10, weight: .medium))
+            .font(.system(size: 9, weight: .medium))
             .foregroundStyle(isEnabled ? Color.secondary : PaneStyle.placeholder)
             .frame(width: 22, height: 20)
             .background(

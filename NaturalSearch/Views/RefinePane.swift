@@ -159,11 +159,11 @@ private struct TagsSection: View {
                             .overlay {
                                 if isOn {
                                     Image(systemName: "checkmark")
-                                        .font(.system(size: 10, weight: .bold))
+                                        .font(.system(size: 9, weight: .bold))
                                         .foregroundStyle(.white)
                                 }
                             }
-                        Text(tag.title).font(.system(size: 16))
+                        Text(tag.title).font(.system(size: 14))
                     }
                     .padding(.vertical, 3)
                     .padding(.horizontal, 6)

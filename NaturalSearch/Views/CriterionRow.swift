@@ -81,7 +81,7 @@ struct CriterionRow: View {
             Button("Zeile duplizieren", action: onDuplicate)
         } label: {
             Image(systemName: "line.3.horizontal")
-                .font(.system(size: 9, weight: .semibold))
+                .font(.system(size: 8, weight: .semibold))
                 .foregroundStyle(criterion.isNegated ? Color.accentColor : .secondary)
                 .frame(width: 22, height: 20)
                 .background(RoundedRectangle(cornerRadius: 5).fill(PaneStyle.contentBackground))
@@ -111,7 +111,7 @@ private struct ExtensionField: View {
                 }
             } label: {
                 Image(systemName: "chevron.down")
-                    .font(.system(size: 9, weight: .bold))
+                    .font(.system(size: 8, weight: .bold))
                     .foregroundStyle(.secondary)
                     .frame(width: 18, height: 18)
             }

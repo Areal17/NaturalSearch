@@ -37,7 +37,7 @@ enum SearchAttribute: String, CaseIterable, Identifiable, Codable, Sendable {
         case .anyText: [.containsPrefixes, .containsWords]
         case .name: [.contains, .beginsWith, .endsWith, .equals]
         case .textContent: [.containsPrefixes, .containsWords, .contains]
-        case .fileExtension, .contentKind: [.equals]
+        case .fileExtension, .contentKind: [.equals, .notEquals]
         case .modified, .created, .lastOpened: [.withinLastDays, .olderThanDays, .today]
         case .size: [.greaterThan, .lessThan]
         case .author, .comment: [.contains, .equals]
@@ -65,6 +65,7 @@ enum SearchOperator: String, CaseIterable, Identifiable, Codable, Sendable {
     case beginsWith
     case endsWith
     case equals
+    case notEquals
     case containsPrefixes
     case containsWords
     case withinLastDays
@@ -81,6 +82,7 @@ enum SearchOperator: String, CaseIterable, Identifiable, Codable, Sendable {
         case .beginsWith: "beginnt mit"
         case .endsWith: "endet mit"
         case .equals: "ist"
+        case .notEquals: "ist nicht"
         case .containsPrefixes: "enthält Präfixe"
         case .containsWords: "enthält Wörter"
         case .withinLastDays: "in den letzten"

@@ -32,7 +32,7 @@ final class SearchModel {
 
     // Oberfläche
     var showsRefinePane = true
-    var showsInfoPane = true
+    var showsInfoPane = false
     var infoTab: InfoTab = .info
 
     let spotlight = SpotlightSearch()

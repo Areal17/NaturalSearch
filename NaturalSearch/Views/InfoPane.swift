@@ -82,7 +82,7 @@ private struct InfoDetails: View {
             FileIcon(url: single.url, size: 44)
         } else {
             Image(systemName: results.isEmpty ? "doc" : "doc.on.doc")
-                .font(.system(size: 30, weight: .thin))
+                .font(.system(size: 28, weight: .thin))
                 .foregroundStyle(PaneStyle.placeholder)
                 .frame(width: 44)
         }

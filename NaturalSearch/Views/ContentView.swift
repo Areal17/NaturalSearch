@@ -8,7 +8,7 @@ struct ContentView: View {
             HSplitView {
                 if model.showsRefinePane {
                     RefinePane()
-                        .frame(minWidth: 500, idealWidth: 560, maxWidth: 720)
+                        .frame(minWidth: 480, idealWidth: 500, maxWidth: 621)
                 }
                 ResultsPane()
                     .frame(minWidth: 360, maxWidth: .infinity)
@@ -175,7 +175,7 @@ private struct StatusBar: View {
             Spacer()
             if let query = model.queryString {
                 Text(query)
-                    .font(.system(size: 10, design: .monospaced))
+                    .font(.system(size: 9, design: .monospaced))
                     .foregroundStyle(.tertiary)
                     .lineLimit(1)
                     .truncationMode(.middle)
