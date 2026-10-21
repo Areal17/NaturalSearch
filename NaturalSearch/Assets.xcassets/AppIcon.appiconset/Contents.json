@@ -31,25 +31,25 @@
       "size" : "128x128"
     },
     {
-      "filename" : "128 × 128.png",
+      "filename" : "64 × 64@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "128 × 129.png",
+      "filename" : "128 × 128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "256 × 256.png",
+      "filename" : "128 × 128@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "256 × 257.png",
+      "filename" : "256 × 256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
