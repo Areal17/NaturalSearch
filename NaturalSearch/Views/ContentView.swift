@@ -4,6 +4,7 @@ struct ContentView: View {
     @Environment(SearchModel.self) private var model
 
     var body: some View {
+        @Bindable var model = model
         VStack(spacing: 0) {
             HSplitView {
                 if model.showsRefinePane {
@@ -22,6 +23,7 @@ struct ContentView: View {
         }
         .toolbar { MainToolbar() }
         .toolbar(removing: .title)
+        .sheet(isPresented: $model.showsSavedQueries) { SavedQueriesView() }
         // Jede Änderung an Filtern, Orten oder Sortierung startet die Suche neu (entprellt).
         .task(id: model.searchKey) {
             try? await Task.sleep(for: .milliseconds(250))
@@ -45,16 +47,20 @@ private struct MainToolbar: ToolbarContent {
                     Text("Noch keine Anfragen")
                 }
                 ForEach(model.recentRequests, id: \.self) { request in
-                    Button(request) {
-                        model.mode = .natural
-                        model.searchText = request
-                        model.submit()
-                    }
+                    Button(request) { model.run(request: request) }
                 }
             } label: {
                 Image(systemName: "rectangle.and.text.magnifyingglass")
             }
             .help("Letzte Anfragen")
+            Menu {
+                Button("Letzte Anfrage speichern", systemImage: "bookmark", action: model.saveLastRequest)
+                    .disabled(!model.canSaveLastRequest)
+                Button("Liste anzeigen …", systemImage: "list.bullet") { model.showsSavedQueries = true }
+            } label: {
+                Image(systemName: "bookmark")
+            }
+            .help("Gespeicherte Anfragen")
         }
 
         ToolbarItem(placement: .principal) {

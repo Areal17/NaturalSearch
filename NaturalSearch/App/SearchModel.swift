@@ -34,10 +34,12 @@ final class SearchModel {
     var showsRefinePane = true
     var showsInfoPane = false
     var infoTab: InfoTab = .info
+    var showsSavedQueries = false
 
     let spotlight = SpotlightSearch()
     let locations = LocationStore()
     let summarizer = ResultSummarizer()
+    let savedQueries = SavedQueryStore()
     private let parser = QueryParser()
     private static let noScopeMessage = "Kein Ort freigegeben – unter „Orte“ einen Ordner auswählen."
 
@@ -138,6 +140,26 @@ final class SearchModel {
             ascending: sortDirection == .oldest,
             limit: limit.rawValue
         ))
+    }
+
+    /// Führt eine gespeicherte oder zuletzt verwendete Anfrage in natürlicher Sprache erneut aus.
+    func run(request: String) {
+        mode = .natural
+        searchText = request
+        submit()
+    }
+
+    // MARK: - Gespeicherte Anfragen
+
+    /// Die letzte Anfrage lässt sich speichern, sofern sie noch nicht in der Liste steht.
+    var canSaveLastRequest: Bool {
+        guard let last = recentRequests.first else { return false }
+        return !savedQueries.contains(last)
+    }
+
+    func saveLastRequest() {
+        guard let last = recentRequests.first else { return }
+        savedQueries.add(last)
     }
 
     func reset() {
