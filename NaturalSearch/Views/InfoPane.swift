@@ -175,13 +175,29 @@ private struct QuickLookPreview: NSViewRepresentable {
     }
 }
 
-/// Zusammenfassung der Treffer oder einer Datei durch das On-Device-Modell.
+/// Zusammenfassung der Treffer oder einer Datei durch das On-Device-Modell
+/// sowie Fragen zum Inhalt der freigegebenen Orte.
 private struct SummaryTab: View {
     @Environment(SearchModel.self) private var model
+    @State private var question = ""
+
+    private var trimmedQuestion: String {
+        question.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     var body: some View {
         let summarizer = model.summarizer
         VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                TextField("Frage zu deinen Dateien …", text: $question)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit(ask)
+                Button("Fragen", action: ask)
+                    .disabled(trimmedQuestion.isEmpty || model.locations.includedURLs.isEmpty)
+            }
+            .disabled(!QueryParser.isAvailable)
+            .help("Apple Intelligence durchsucht die freigegebenen Orte mit Spotlight und beantwortet die Frage.")
+
             HStack {
                 Button("Treffer zusammenfassen") {
                     summarizer.summarizeResults(model.displayedResults, request: model.searchText)
@@ -207,14 +223,56 @@ private struct SummaryTab: View {
                 Label(error, systemImage: "exclamationmark.triangle").foregroundStyle(.red)
             }
             ScrollView {
-                Text(summarizer.text.isEmpty && !summarizer.isRunning ? "Apple Intelligence fasst die Trefferliste oder ein einzelnes Dokument zusammen – vollständig auf diesem Mac." : summarizer.text)
+                Text(summarizer.text.isEmpty && !summarizer.isRunning ? "Apple Intelligence beantwortet Fragen zu deinen Dateien oder fasst die Trefferliste bzw. ein einzelnes Dokument zusammen – vollständig auf diesem Mac." : summarizer.text)
                     .foregroundStyle(summarizer.text.isEmpty ? .secondary : .primary)
                     .textSelection(.enabled)
                     .frame(maxWidth: .infinity, alignment: .leading)
+
+                if !summarizer.sources.isEmpty {
+                    SourceList(urls: summarizer.sources)
+                        .padding(.top, 8)
+                }
             }
         }
         .padding(14)
         .frame(maxHeight: .infinity, alignment: .top)
+    }
+
+    private func ask() {
+        guard !trimmedQuestion.isEmpty, !model.locations.includedURLs.isEmpty else { return }
+        model.summarizer.answerQuestion(trimmedQuestion, scopes: model.locations.includedURLs)
+    }
+}
+
+/// Dateien, auf die sich eine Antwort stützt – Klick öffnet, Kontextmenü zeigt im Finder.
+private struct SourceList: View {
+    let urls: [URL]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Quellen")
+                .font(.headline)
+            ForEach(urls, id: \.self) { url in
+                Button {
+                    NSWorkspace.shared.open(url)
+                } label: {
+                    Label {
+                        Text(url.lastPathComponent)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    } icon: {
+                        FileIcon(url: url)
+                    }
+                }
+                .buttonStyle(.link)
+                .help(url.path)
+                .contextMenu {
+                    Button("Öffnen") { NSWorkspace.shared.open(url) }
+                    Button("Im Finder zeigen") { NSWorkspace.shared.activateFileViewerSelecting([url]) }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
