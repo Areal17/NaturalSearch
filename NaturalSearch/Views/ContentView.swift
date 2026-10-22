@@ -24,12 +24,7 @@ struct ContentView: View {
         .toolbar { MainToolbar() }
         .toolbar(removing: .title)
         .sheet(isPresented: $model.showsSavedQueries) { SavedQueriesView() }
-        // Jede Änderung an Filtern, Orten oder Sortierung startet die Suche neu (entprellt).
-        .task(id: model.searchKey) {
-            try? await Task.sleep(for: .milliseconds(250))
-            guard !Task.isCancelled else { return }
-            model.performSearch()
-        }
+        .autoSearch()
     }
 }
 

@@ -24,5 +24,11 @@ struct NaturalSearchApp: App {
                     .keyboardShortcut("n")
             }
         }
+
+        MenuBarExtra("NaturalSearch", systemImage: "sparkle.magnifyingglass") {
+            MenuBarPanel()
+                .environment(model)
+        }
+        .menuBarExtraStyle(.window)
     }
 }

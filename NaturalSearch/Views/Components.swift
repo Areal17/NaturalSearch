@@ -145,6 +145,27 @@ struct FileIcon: View {
     }
 }
 
+/// Startet die Suche neu, sobald sich Filter, Orte oder Sortierung ändern (entprellt).
+/// Hauptfenster und Menüleisten-Panel nutzen beide diesen Auslöser, damit auch
+/// bei geschlossenem Fenster gesucht wird.
+private struct AutoSearch: ViewModifier {
+    @Environment(SearchModel.self) private var model
+
+    func body(content: Content) -> some View {
+        content.task(id: model.searchKey) {
+            try? await Task.sleep(for: .milliseconds(250))
+            guard !Task.isCancelled else { return }
+            model.performSearch()
+        }
+    }
+}
+
+extension View {
+    func autoSearch() -> some View {
+        modifier(AutoSearch())
+    }
+}
+
 #Preview {
     VStack(spacing: 16) {
         PaneHeader(title: "Resultate") {
