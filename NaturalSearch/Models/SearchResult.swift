@@ -1,4 +1,5 @@
 import Foundation
+import UniformTypeIdentifiers
 
 /// Ein Spotlight-Treffer, entkoppelt vom nicht-`Sendable` `NSMetadataItem`.
 struct SearchResult: Identifiable, Hashable, Sendable {
@@ -27,19 +28,53 @@ struct SearchResult: Identifiable, Hashable, Sendable {
 }
 
 extension SearchResult {
-    init?(item: NSMetadataItem) {
-        guard let path = item.value(forAttribute: NSMetadataItemPathKey) as? String else { return nil }
+    /// Attribute, die `NSMetadataQuery.valueListAttributes` gleich mit den Treffern lädt.
+    /// Ohne diese Liste kostet jeder Einzelabruf ~0,3 ms (XPC zu Spotlight) – bei
+    /// Zehntausenden Treffern in Unterordnern blockiert das den Hauptthread minutenlang.
+    /// `kMDItemKind` fehlt bewusst: Spotlight liefert es nie vorab, darum wird die Art
+    /// aus dem Content-Type abgeleitet.
+    static let metadataAttributes = [
+        NSMetadataItemFSNameKey,
+        NSMetadataItemContentTypeKey,
+        NSMetadataItemFSCreationDateKey,
+        NSMetadataItemContentModificationDateKey,
+        "kMDItemLastUsedDate",
+        NSMetadataItemFSSizeKey,
+        "kMDItemUserTags",
+        "kMDItemFinderComment",
+    ]
+
+    /// Liest einen Treffer aus dem Zwischenspeicher der Abfrage. Anders als
+    /// `NSMetadataItem.value(forAttribute:)` fragt `value(ofAttribute:forResultAt:)` fehlende
+    /// Werte (z. B. nie geöffnete Dateien ohne `kMDItemLastUsedDate`) nicht erneut bei Spotlight an.
+    /// Der Pfad kommt vom Item, er ist dort immer schon vorhanden.
+    /// `kindDescription` übersetzt einen Content-Type in die lokalisierte Art; der Aufrufer
+    /// kann so pro Typ zwischenspeichern (es gibt nur wenige verschiedene Typen).
+    init?(query: NSMetadataQuery, index: Int, kindDescription: (String) -> String = Self.kindDescription) {
+        guard let item = query.result(at: index) as? NSMetadataItem,
+              let path = item.value(forAttribute: NSMetadataItemPathKey) as? String
+        else { return nil }
+        func value<T>(_ attribute: String) -> T? {
+            query.value(ofAttribute: attribute, forResultAt: index) as? T
+        }
         id = path
-        url = URL(fileURLWithPath: path)
-        name = item.value(forAttribute: NSMetadataItemFSNameKey) as? String ?? url.lastPathComponent
-        kind = item.value(forAttribute: "kMDItemKind") as? String ?? ""
-        contentType = item.value(forAttribute: NSMetadataItemContentTypeKey) as? String
-        created = item.value(forAttribute: NSMetadataItemFSCreationDateKey) as? Date
-        modified = item.value(forAttribute: NSMetadataItemContentModificationDateKey) as? Date
-        lastOpened = item.value(forAttribute: "kMDItemLastUsedDate") as? Date
-        size = (item.value(forAttribute: NSMetadataItemFSSizeKey) as? NSNumber)?.int64Value
-        tags = item.value(forAttribute: "kMDItemUserTags") as? [String] ?? []
-        comment = item.value(forAttribute: "kMDItemFinderComment") as? String
+        // `.inferFromPath` statt `fileURLWithPath:` – das würde für jeden Treffer im
+        // Dateisystem nachsehen, ob der Pfad ein Ordner ist.
+        url = URL(filePath: path, directoryHint: .inferFromPath)
+        name = value(NSMetadataItemFSNameKey) ?? url.lastPathComponent
+        contentType = value(NSMetadataItemContentTypeKey)
+        kind = contentType.map(kindDescription) ?? ""
+        created = value(NSMetadataItemFSCreationDateKey)
+        modified = value(NSMetadataItemContentModificationDateKey)
+        lastOpened = value("kMDItemLastUsedDate")
+        size = (value(NSMetadataItemFSSizeKey) as NSNumber?)?.int64Value
+        tags = value("kMDItemUserTags") ?? []
+        comment = value("kMDItemFinderComment")
+    }
+
+    /// Lokalisierte Art wie im Finder, z. B. „PDF-Dokument“.
+    static func kindDescription(for contentType: String) -> String {
+        UTType(contentType)?.localizedDescription ?? ""
     }
 }
 
