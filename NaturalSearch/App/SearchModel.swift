@@ -13,6 +13,9 @@ final class SearchModel {
     var mode: SearchMode = QueryParser.isAvailable ? .natural : .anyText
     private(set) var isParsing = false
     private(set) var recentRequests: [String] = []
+    /// Zuletzt vom Modell in Filterzeilen übersetzte Anfrage. Solange der Text gleich bleibt,
+    /// sucht Return/▶ nur erneut und überschreibt die Verfeinerungen des Benutzers nicht.
+    private var interpretedRequest: String?
 
     // Verfeinern
     var criteria: [SearchCriterion] = SearchCriterion.defaultSet
@@ -82,10 +85,11 @@ final class SearchModel {
 
     // MARK: - Aktionen
 
-    /// Return im Suchfeld oder ▶: in natürlicher Sprache erst das Modell fragen.
+    /// Return im Suchfeld oder ▶: in natürlicher Sprache erst das Modell fragen –
+    /// außer die Anfrage wurde schon interpretiert, dann gelten die (ggf. verfeinerten) Zeilen.
     func submit() {
         let request = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard mode == .natural, !request.isEmpty else {
+        guard mode == .natural, !request.isEmpty, request != interpretedRequest else {
             performSearch()
             return
         }
@@ -99,6 +103,7 @@ final class SearchModel {
         do {
             let query = try await parser.parse(request)
             apply(query, fallbackText: request)
+            interpretedRequest = request
             remember(request)
         } catch {
             message = "Anfrage konnte nicht interpretiert werden: \(error.localizedDescription)"
@@ -146,6 +151,8 @@ final class SearchModel {
     func run(request: String) {
         mode = .natural
         searchText = request
+        // Bewusst gewählte Anfrage: immer frisch interpretieren.
+        interpretedRequest = nil
         submit()
     }
 
@@ -164,6 +171,7 @@ final class SearchModel {
 
     func reset() {
         searchText = ""
+        interpretedRequest = nil
         criteria = SearchCriterion.defaultSet
         tags = []
         selection = []
