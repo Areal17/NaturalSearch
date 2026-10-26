@@ -90,15 +90,23 @@ struct FileSearchQueryTests {
 
     @Test func invoicesFromLastMonthBecomeThreeRows() {
         let rows = query(keywords: ["Rechnung"], extensions: ["PDF"], days: 31).normalized().criteria
-        #expect(rows.map(\.attribute) == [.anyText, .fileExtension, .modified])
-        #expect(rows[1].value == "pdf")
+        #expect(rows.map(\.attribute) == [.anyText, .contentKind, .modified])
+        #expect(rows[1].contentKind == .pdf)
         #expect(rows[2].value == "31")
     }
 
     @Test func normalizationDropsExtensionsAndFillerFromKeywords() {
-        let normalized = query(keywords: ["pdf", "Dateien", "Steuer"], extensions: [".pdf"], contentKind: .pdf).normalized()
+        let normalized = query(keywords: ["pdf", "Dateien", "Steuer"], extensions: [".pdf"], contentKind: .document).normalized()
         #expect(normalized.keywords == ["Steuer"])
+        #expect(normalized.extensions.isEmpty)
+        #expect(normalized.contentKind == .pdf)
+    }
+
+    @Test func severalExtensionsStayExtensionsWithoutContentKind() {
+        let normalized = query(extensions: ["pdf", "docx"], contentKind: .document).normalized()
+        #expect(normalized.extensions == ["docx", "pdf"])
         #expect(normalized.contentKind == .any)
+        #expect(normalized.criteria.map(\.attribute) == [.fileExtension])
     }
 
     @Test func openedDateMapsToLastOpened() {

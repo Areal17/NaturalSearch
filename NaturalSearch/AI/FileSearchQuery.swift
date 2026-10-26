@@ -74,8 +74,15 @@ extension FileSearchQuery {
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty && !blocked.contains($0.lowercased()) }
         copy.nameKeywords = nameKeywords.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
-        // Eine konkrete Endung ist genauer als die Inhaltsart; beides zusammen widerspricht sich oft.
-        if !copy.extensions.isEmpty { copy.contentKind = .any }
+        if copy.extensions == ["pdf"] {
+            // Nur PDF gesucht: als Inhaltsart „PDF“ zeigen; sie prüft den Dateityp und findet
+            // auch PDFs ohne bzw. mit abweichender Endung.
+            copy.extensions = []
+            copy.contentKind = .pdf
+        } else if !copy.extensions.isEmpty {
+            // Eine konkrete Endung ist genauer als die Inhaltsart; beides zusammen widerspricht sich oft.
+            copy.contentKind = .any
+        }
         // Das Modell setzt gern days = 1, obwohl die Anfrage keinen Zeitraum nennt.
         if let request, copy.days > 0, !Self.mentionsTime(request) { copy.days = 0 }
         copy.scope = scope.trimmingCharacters(in: .whitespaces)
