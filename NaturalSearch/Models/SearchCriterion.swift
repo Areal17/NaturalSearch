@@ -35,8 +35,8 @@ enum SearchAttribute: String, CaseIterable, Identifiable, Codable, Sendable {
     var operators: [SearchOperator] {
         switch self {
         case .anyText: [.containsPrefixes, .containsWords]
-        case .name: [.contains, .beginsWith, .endsWith, .equals]
-        case .textContent: [.containsPrefixes, .containsWords, .contains]
+        case .name: [.contains, .notContains, .beginsWith, .endsWith, .equals]
+        case .textContent: [.containsPrefixes, .containsWords, .contains, .notContains]
         case .fileExtension, .contentKind: [.equals, .notEquals]
         case .modified, .created, .lastOpened: [.withinLastDays, .olderThanDays, .today]
         case .size: [.greaterThan, .lessThan]
@@ -62,6 +62,7 @@ enum SearchAttribute: String, CaseIterable, Identifiable, Codable, Sendable {
 /// Vergleichsoperator einer Filterzeile.
 enum SearchOperator: String, CaseIterable, Identifiable, Codable, Sendable {
     case contains
+    case notContains
     case beginsWith
     case endsWith
     case equals
@@ -79,6 +80,7 @@ enum SearchOperator: String, CaseIterable, Identifiable, Codable, Sendable {
     var title: String {
         switch self {
         case .contains: "enthält"
+        case .notContains: "enthält nicht"
         case .beginsWith: "beginnt mit"
         case .endsWith: "endet mit"
         case .equals: "ist"
@@ -95,6 +97,9 @@ enum SearchOperator: String, CaseIterable, Identifiable, Codable, Sendable {
 
     /// `false` für Operatoren, die keinen Wert brauchen.
     var needsValue: Bool { self != .today }
+
+    /// Operatoren, die Treffer ausschließen statt einschließen.
+    var isExclusive: Bool { self == .notEquals || self == .notContains }
 }
 
 /// Verknüpfung einer Zeile mit der vorherigen. UND bindet stärker als ODER:

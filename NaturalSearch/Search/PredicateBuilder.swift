@@ -127,7 +127,7 @@ enum PredicateBuilder {
         switch criterion.attribute {
         case .anyText:
             return wordClause([Key.displayName, Key.textContent], words: value, criterion: criterion)
-        case .textContent where criterion.op != .contains:
+        case .textContent where criterion.op != .contains && criterion.op != .notContains:
             return wordClause([Key.textContent], words: value, criterion: criterion)
         case .name, .textContent, .author, .comment:
             return stringClause(keys(for: criterion.attribute), value: value, criterion: criterion)
@@ -174,7 +174,7 @@ enum PredicateBuilder {
         case .equals: escaped
         default: "*\(escaped)*"
         }
-        return compare(keys, pattern: pattern, modifiers: modifiers(criterion, wordBased: false), negated: criterion.isNegated)
+        return compare(keys, pattern: pattern, modifiers: modifiers(criterion, wordBased: false), negated: excludes(criterion))
     }
 
     private static func extensionClause(_ value: String, negated: Bool) -> String? {
@@ -235,9 +235,9 @@ enum PredicateBuilder {
 
     // MARK: - Hilfsfunktionen
 
-    /// „ist nicht“ schließt aus; die Option „Nicht“ kehrt das zusätzlich um.
+    /// „ist nicht“ und „enthält nicht“ schließen aus; die Option „Nicht“ kehrt das zusätzlich um.
     private static func excludes(_ criterion: SearchCriterion) -> Bool {
-        (criterion.op == .notEquals) != criterion.isNegated
+        criterion.op.isExclusive != criterion.isNegated
     }
 
     /// Vergleicht mehrere Attribute: positiv mit ODER, negiert (De Morgan) mit UND.

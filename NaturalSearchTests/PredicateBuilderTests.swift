@@ -34,6 +34,30 @@ struct PredicateBuilderTests {
         #expect(PredicateBuilder.clause(for: criterion) == #"kMDItemFSName != "*.pdf"c && kMDItemFSName != "*.docx"c"#)
     }
 
+    @Test func nameNotContainsExcludesSubstring() {
+        let clause = PredicateBuilder.clause(for: SearchCriterion(.name, .notContains, value: "Entwurf"))
+        #expect(clause == #"kMDItemDisplayName != "*Entwurf*"cd"#)
+    }
+
+    @Test func textContentNotContainsExcludesSubstring() {
+        let clause = PredicateBuilder.clause(for: SearchCriterion(.textContent, .notContains, value: "vertraulich"))
+        #expect(clause == #"kMDItemTextContent != "*vertraulich*"cd"#)
+    }
+
+    @Test func negatedNotContainsMeansContains() {
+        var criterion = SearchCriterion(.name, .notContains, value: "Entwurf")
+        criterion.isNegated = true
+        #expect(PredicateBuilder.clause(for: criterion) == #"kMDItemDisplayName == "*Entwurf*"cd"#)
+    }
+
+    @Test func notContainsInNegatedGroupFlipsBack() throws {
+        var group = CriterionGroup(criteria: [SearchCriterion(.textContent, .notContains, value: "Entwurf")])
+        group.isNegated = true
+        let query = try #require(PredicateBuilder.queryString(filter: CriterionGroup([.group(group)])))
+        #expect(query == #"(kMDItemTextContent == "*Entwurf*"cd)"#)
+        #expect(PredicateBuilder.predicate(from: query) != nil)
+    }
+
     @Test func contentKindUsesTypeTree() {
         let clause = PredicateBuilder.clause(for: SearchCriterion(.contentKind, contentKind: .image))
         #expect(clause == #"kMDItemContentTypeTree == "public.image""#)
