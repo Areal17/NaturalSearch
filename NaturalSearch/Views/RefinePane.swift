@@ -10,15 +10,7 @@ struct RefinePane: View {
             VStack(spacing: 0) {
                 PaneHeader(title: "Verfeinern")
                 section {
-                    ForEach($model.criteria) { $criterion in
-                        CriterionRow(
-                            criterion: $criterion,
-                            canRemove: model.criteria.count > 1,
-                            onAdd: { model.addCriterion(after: criterion.id) },
-                            onRemove: { model.removeCriterion(criterion.id) },
-                            onDuplicate: { model.duplicateCriterion(criterion.id) }
-                        )
-                    }
+                    CriterionItemsView(group: $model.filter)
                 }
 
                 PaneHeader(title: "Orte")

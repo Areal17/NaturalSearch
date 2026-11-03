@@ -18,7 +18,8 @@ final class SearchModel {
     private var interpretedRequest: String?
 
     // Verfeinern
-    var criteria: [SearchCriterion] = SearchCriterion.defaultSet
+    /// Filterzeilen und verschachtelte Gruppen; die Wurzel ist selbst eine Gruppe.
+    var filter: CriterionGroup = .defaultRoot
     var tags: Set<TagColor> = []
     var limit: ResultLimit = .hundredThousand
     var sortDirection: SortDirection = .newest
@@ -54,7 +55,7 @@ final class SearchModel {
     // MARK: - Abgeleitete Werte
 
     var queryString: String? {
-        PredicateBuilder.queryString(criteria: criteria, freeText: searchText, mode: mode, tags: tags)
+        PredicateBuilder.queryString(filter: filter, freeText: searchText, mode: mode, tags: tags)
     }
 
     /// Ändert sich dieser Schlüssel, startet die Ansicht die Suche neu.
@@ -113,7 +114,7 @@ final class SearchModel {
     /// Überträgt die Modellantwort in die sichtbaren Filter.
     func apply(_ query: FileSearchQuery, fallbackText: String) {
         let rows = query.criteria
-        criteria = rows.isEmpty ? [SearchCriterion(.anyText, .containsPrefixes, value: fallbackText)] : rows
+        filter = CriterionGroup(criteria: rows.isEmpty ? [SearchCriterion(.anyText, .containsPrefixes, value: fallbackText)] : rows)
         tags = Set(query.tags)
         if query.days > 0 { sortField = query.dateField.sortField }
         if !query.scope.isEmpty {
@@ -172,30 +173,71 @@ final class SearchModel {
     func reset() {
         searchText = ""
         interpretedRequest = nil
-        criteria = SearchCriterion.defaultSet
+        filter = .defaultRoot
         tags = []
         selection = []
         message = nil
         spotlight.clear()
     }
 
-    // MARK: - Filterzeilen
+    // MARK: - Filterzeilen und Gruppen
 
-    func addCriterion(after id: SearchCriterion.ID) {
-        let index = criteria.firstIndex { $0.id == id }.map { $0 + 1 } ?? criteria.endIndex
-        criteria.insert(SearchCriterion(.name), at: index)
+    /// Ein Element darf entfernt werden, solange danach mindestens eine Zeile übrig bleibt.
+    func canRemove(_ item: CriterionItem) -> Bool {
+        filter.criterionCount > item.criterionCount
     }
 
-    func duplicateCriterion(_ id: SearchCriterion.ID) {
-        guard let index = criteria.firstIndex(where: { $0.id == id }) else { return }
-        var copy = criteria[index]
-        copy.id = UUID()
-        criteria.insert(copy, at: index + 1)
+    func addCriterion(after id: CriterionItem.ID) {
+        filter.modifyItems(containing: id) { items, index in
+            items.insert(.criterion(SearchCriterion(.name)), at: index + 1)
+        }
     }
 
-    func removeCriterion(_ id: SearchCriterion.ID) {
-        guard criteria.count > 1 else { return }
-        criteria.removeAll { $0.id == id }
+    /// Hängt eine neue Zeile an das Ende der Gruppe an.
+    func appendCriterion(to groupID: CriterionGroup.ID) {
+        filter.modifyGroup(groupID) { $0.items.append(.criterion(SearchCriterion(.name))) }
+    }
+
+    /// Fügt hinter dem Element eine neue Gruppe mit einer leeren Zeile ein.
+    func addGroup(after id: CriterionItem.ID) {
+        filter.modifyItems(containing: id) { items, index in
+            items.insert(.group(CriterionGroup([.criterion(SearchCriterion(.name))])), at: index + 1)
+        }
+    }
+
+    /// Schließt das Element in eine neue Gruppe ein; die Gruppe übernimmt seine Verknüpfung.
+    func wrapInGroup(_ id: CriterionItem.ID) {
+        filter.modifyItems(containing: id) { items, index in
+            var inner = items[index]
+            let connector = inner.connector
+            inner.connector = .and
+            items[index] = .group(CriterionGroup([inner], connector: connector))
+        }
+    }
+
+    /// Löst die Gruppe auf und setzt ihre Elemente an ihre Stelle (ohne Klammer und „Nicht“).
+    func ungroup(_ id: CriterionGroup.ID) {
+        filter.modifyItems(containing: id) { items, index in
+            guard case .group(let group) = items[index] else { return }
+            var children = group.items
+            if !children.isEmpty { children[0].connector = group.connector }
+            items.replaceSubrange(index...index, with: children)
+        }
+    }
+
+    func duplicateItem(_ id: CriterionItem.ID) {
+        filter.modifyItems(containing: id) { items, index in
+            items.insert(items[index].withNewIDs(), at: index + 1)
+        }
+    }
+
+    func removeItem(_ id: CriterionItem.ID) {
+        // Vorab zählen: Während `modifyItems` läuft, darf `filter` nicht gelesen werden.
+        let total = filter.criterionCount
+        filter.modifyItems(containing: id) { items, index in
+            guard total > items[index].criterionCount else { return }
+            items.remove(at: index)
+        }
     }
 
     // MARK: - Treffer

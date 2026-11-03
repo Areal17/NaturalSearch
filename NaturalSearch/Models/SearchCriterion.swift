@@ -97,6 +97,22 @@ enum SearchOperator: String, CaseIterable, Identifiable, Codable, Sendable {
     var needsValue: Bool { self != .today }
 }
 
+/// Verknüpfung einer Zeile mit der vorherigen. UND bindet stärker als ODER:
+/// `A und B oder C` bedeutet `(A und B) oder C`.
+enum LogicalConnector: String, CaseIterable, Identifiable, Codable, Sendable {
+    case and
+    case or
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .and: "und"
+        case .or: "oder"
+        }
+    }
+}
+
 /// Eine Zeile im Bereich „Verfeinern“.
 struct SearchCriterion: Identifiable, Hashable, Codable, Sendable {
     var id = UUID()
@@ -111,6 +127,8 @@ struct SearchCriterion: Identifiable, Hashable, Codable, Sendable {
     var isCaseSensitive = false
     var isDiacriticSensitive = false
     var isNegated = false
+    /// Verknüpfung mit der vorherigen nicht leeren Zeile; bei der ersten Zeile ohne Bedeutung.
+    var connector: LogicalConnector = .and
 
     init(_ attribute: SearchAttribute, _ op: SearchOperator? = nil, value: String = "", contentKind: ContentKind = .any) {
         self.attribute = attribute

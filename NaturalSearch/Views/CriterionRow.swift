@@ -7,6 +7,8 @@ struct CriterionRow: View {
     let onAdd: () -> Void
     let onRemove: () -> Void
     let onDuplicate: () -> Void
+    let onAddGroup: () -> Void
+    let onWrapInGroup: () -> Void
 
     var body: some View {
         HStack(spacing: 8) {
@@ -79,19 +81,64 @@ struct CriterionRow: View {
             Toggle("Diakritische Zeichen beachten", isOn: $criterion.isDiacriticSensitive)
             Divider()
             Button("Zeile duplizieren", action: onDuplicate)
+            Divider()
+            Button("Gruppe hinzufügen", action: onAddGroup)
+            Button("In Gruppe einschließen", action: onWrapInGroup)
         } label: {
-            Image(systemName: "line.3.horizontal")
-                .font(.system(size: 8, weight: .semibold))
-                .foregroundStyle(criterion.isNegated ? Color.accentColor : .secondary)
-                .frame(width: 22, height: 20)
-                .background(RoundedRectangle(cornerRadius: 5).fill(PaneStyle.contentBackground))
-                .overlay(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.primary.opacity(0.12)))
+            OptionsMenuLabel(isHighlighted: criterion.isNegated)
         }
-        .menuStyle(.button)
-        .buttonStyle(.plain)
-        .menuIndicator(.hidden)
-        .fixedSize()
+        .optionsMenuStyle()
         .help("Optionen")
+    }
+}
+
+/// Das ≡-Symbol der Options-Menüs von Zeilen und Gruppen.
+struct OptionsMenuLabel: View {
+    let isHighlighted: Bool
+
+    var body: some View {
+        Image(systemName: "line.3.horizontal")
+            .font(.system(size: 8, weight: .semibold))
+            .foregroundStyle(isHighlighted ? Color.accentColor : .secondary)
+            .frame(width: 22, height: 20)
+            .background(RoundedRectangle(cornerRadius: 5).fill(PaneStyle.contentBackground))
+            .overlay(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.primary.opacity(0.12)))
+    }
+}
+
+extension View {
+    /// Darstellung der ≡-Menüs: schlichter Knopf ohne Pfeil.
+    func optionsMenuStyle() -> some View {
+        menuStyle(.button)
+            .buttonStyle(.plain)
+            .menuIndicator(.hidden)
+            .fixedSize()
+    }
+}
+
+/// Verknüpfung zwischen zwei Filterzeilen: und · oder
+struct ConnectorPicker: View {
+    @Binding var connector: LogicalConnector
+
+    var body: some View {
+        HStack(spacing: 8) {
+            line
+            Picker("Verknüpfung", selection: $connector) {
+                ForEach(LogicalConnector.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .controlSize(.small)
+            .fixedSize()
+            .help("„und“ bindet stärker als „oder“: A und B oder C = (A und B) oder C")
+            line
+        }
+    }
+
+    private var line: some View {
+        Rectangle()
+            .fill(Color.primary.opacity(0.1))
+            .frame(height: 1)
     }
 }
 
@@ -130,7 +177,13 @@ private struct ExtensionField: View {
     @Previewable @State var criteria = SearchCriterion.defaultSet
     VStack(spacing: 8) {
         ForEach($criteria) { $criterion in
-            CriterionRow(criterion: $criterion, canRemove: criteria.count > 1, onAdd: {}, onRemove: {}, onDuplicate: {})
+            if criterion.id != criteria.first?.id {
+                ConnectorPicker(connector: $criterion.connector)
+            }
+            CriterionRow(
+                criterion: $criterion, canRemove: criteria.count > 1,
+                onAdd: {}, onRemove: {}, onDuplicate: {}, onAddGroup: {}, onWrapInGroup: {}
+            )
         }
     }
     .padding()

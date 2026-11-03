@@ -22,20 +22,101 @@ enum PredicateBuilder {
 
     /// Gesamte Abfrage oder `nil`, wenn nichts eingeschränkt ist.
     static func queryString(
-        criteria: [SearchCriterion],
+        filter: CriterionGroup,
         freeText: String = "",
         mode: SearchMode = .natural,
         tags: Set<TagColor> = []
     ) -> String? {
-        var clauses = criteria.compactMap(clause(for:))
+        var clauses = clauses(for: filter)
         if let free = freeTextClause(freeText, mode: mode) { clauses.append(free) }
         if let tagClause = tagClause(tags) { clauses.append(tagClause) }
         guard !clauses.isEmpty else { return nil }
         return clauses.map { "(\($0))" }.joined(separator: " && ")
     }
 
+    /// Wie oben, für eine flache Liste von Zeilen.
+    static func queryString(
+        criteria: [SearchCriterion],
+        freeText: String = "",
+        mode: SearchMode = .natural,
+        tags: Set<TagColor> = []
+    ) -> String? {
+        queryString(filter: CriterionGroup(criteria: criteria), freeText: freeText, mode: mode, tags: tags)
+    }
+
     static func predicate(from queryString: String) -> NSPredicate? {
         NSPredicate(fromMetadataQueryString: queryString)
+    }
+
+    // MARK: - Boolesche Verknüpfung
+
+    /// Logischer Ausdruck, bevor er als MDQuery-Text ausgegeben wird.
+    private indirect enum Expression {
+        case clause(String)
+        case all([Expression])
+        case any([Expression])
+
+        /// Fasst gleichartige Verschachtelungen zusammen und lässt Ein-Element-Listen weg.
+        static func all(of parts: [Expression]) -> Expression {
+            let flat = parts.flatMap { if case .all(let inner) = $0 { inner } else { [$0] } }
+            return flat.count == 1 ? flat[0] : .all(flat)
+        }
+
+        static func any(of parts: [Expression]) -> Expression {
+            let flat = parts.flatMap { if case .any(let inner) = $0 { inner } else { [$0] } }
+            return flat.count == 1 ? flat[0] : .any(flat)
+        }
+
+        var text: String {
+            switch self {
+            case .clause(let clause): clause
+            case .all(let parts): parts.map { "(\($0.text))" }.joined(separator: " && ")
+            case .any(let parts): parts.map { "(\($0.text))" }.joined(separator: " || ")
+            }
+        }
+    }
+
+    /// Die UND-verknüpften Teile der Gruppe – oder genau ein Ausdruck, wenn ODER beteiligt ist.
+    static func clauses(for group: CriterionGroup) -> [String] {
+        switch expression(for: group) {
+        case nil: []
+        case .all(let parts): parts.map(\.text)
+        case let expression?: [expression.text]
+        }
+    }
+
+    static func criteriaClauses(_ criteria: [SearchCriterion]) -> [String] {
+        clauses(for: CriterionGroup(criteria: criteria))
+    }
+
+    /// Verknüpft die Elemente einer Gruppe. UND bindet stärker, daher entstehen ODER-verknüpfte
+    /// Teilfolgen von UND-Elementen. Eine umgekehrte Gruppe wird nach De Morgan aufgelöst, weil
+    /// die Abfragesprache keine Negation von Klammern kennt: Jede Zeile wird umgekehrt
+    /// (wie mit der Option „Nicht“), und UND und ODER tauschen die Rollen.
+    private static func expression(for group: CriterionGroup, negated: Bool = false) -> Expression? {
+        let negate = negated != group.isNegated
+        var conjunctions: [[Expression]] = []
+        for item in group.items {
+            let part: Expression?
+            switch item {
+            case .criterion(var criterion):
+                if negate { criterion.isNegated.toggle() }
+                part = clause(for: criterion).map(Expression.clause)
+            case .group(let subgroup):
+                part = expression(for: subgroup, negated: negate)
+            }
+            guard let part else { continue }
+            if conjunctions.isEmpty || item.connector == .or {
+                conjunctions.append([part])
+            } else {
+                conjunctions[conjunctions.count - 1].append(part)
+            }
+        }
+        guard !conjunctions.isEmpty else { return nil }
+        // nicht ((A und B) oder C) = (nicht A oder nicht B) und nicht C
+        return negate
+            ? .all(of: conjunctions.map { .any(of: $0) })
+            : .any(of: conjunctions.map { .all(of: $0) })
     }
 
     // MARK: - Einzelne Zeilen
