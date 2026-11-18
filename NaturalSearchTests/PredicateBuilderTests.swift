@@ -19,8 +19,31 @@ struct PredicateBuilderTests {
     }
 
     @Test func anyTextSearchesNameAndContent() {
+        // Im Namen auch mitten im Wort („Stromrechnung“), im Inhalt am Wortanfang.
         let clause = PredicateBuilder.clause(for: SearchCriterion(.anyText, .containsPrefixes, value: "Rechnung"))
-        #expect(clause == #"kMDItemDisplayName == "Rechnung*"cdw || kMDItemTextContent == "Rechnung*"cdw"#)
+        #expect(clause == #"kMDItemDisplayName == "*Rechnung*"cd || kMDItemTextContent == "Rechnung*"cdw"#)
+    }
+
+    @Test func anyTextShortWordStaysWordPrefixInName() {
+        let clause = PredicateBuilder.clause(for: SearchCriterion(.anyText, .containsPrefixes, value: "KI"))
+        #expect(clause == #"kMDItemDisplayName == "KI*"cdw || kMDItemTextContent == "KI*"cdw"#)
+    }
+
+    @Test func anyTextContainsWordsKeepsWholeWords() {
+        let clause = PredicateBuilder.clause(for: SearchCriterion(.anyText, .containsWords, value: "Rechnung"))
+        #expect(clause == #"kMDItemDisplayName == "Rechnung"cdw || kMDItemTextContent == "Rechnung"cdw"#)
+    }
+
+    @Test func negatedAnyTextExcludesNameAndContent() {
+        var criterion = SearchCriterion(.anyText, .containsPrefixes, value: "Entwurf")
+        criterion.isNegated = true
+        #expect(PredicateBuilder.clause(for: criterion) == #"kMDItemDisplayName != "*Entwurf*"cd && kMDItemTextContent != "Entwurf*"cdw"#)
+    }
+
+    @Test func anyTextWithSeveralWordsIsAcceptedBySpotlight() throws {
+        let query = try #require(PredicateBuilder.queryString(criteria: [SearchCriterion(.anyText, .containsPrefixes, value: "Strom Rechnung")]))
+        #expect(query.contains(#"kMDItemDisplayName == "*Strom*"cd"#))
+        #expect(PredicateBuilder.predicate(from: query) != nil)
     }
 
     @Test func extensionsAreOredAndStripped() {
@@ -225,23 +248,90 @@ struct CriterionGroupTests {
         item.connector = .or
         #expect(item.connector == .or)
     }
+
+    @Test func positiveTextTermsSkipExcludedRowsAndNegatedGroups() {
+        var negatedRow = SearchCriterion(.name, .contains, value: "Entwurf")
+        negatedRow.isNegated = true
+        var negatedGroup = CriterionGroup(criteria: [SearchCriterion(.anyText, .containsPrefixes, value: "alt")])
+        negatedGroup.isNegated = true
+        let root = CriterionGroup([
+            .criterion(SearchCriterion(.anyText, .containsPrefixes, value: "Strom Rechnung")),
+            .criterion(SearchCriterion(.textContent, .notContains, value: "vertraulich")),
+            .criterion(negatedRow),
+            .criterion(SearchCriterion(.fileExtension, value: "pdf")),
+            .group(CriterionGroup(criteria: [SearchCriterion(.name, .contains, value: "Beleg")])),
+            .group(negatedGroup),
+        ])
+        #expect(root.positiveTextTerms == ["Strom", "Rechnung", "Beleg"])
+    }
+}
+
+@Suite("RelevanceRanker")
+struct RelevanceRankerTests {
+    private let now = Date(timeIntervalSinceReferenceDate: 800_000_000)
+
+    private func result(_ name: String, openedDaysAgo days: Double? = nil) -> SearchResult {
+        let path = "/tmp/\(name)"
+        return SearchResult(
+            id: path, url: URL(filePath: path), name: name, kind: "", contentType: nil, created: nil,
+            modified: nil, lastOpened: days.map { now.addingTimeInterval(-$0 * 86_400) }, size: nil, tags: [], comment: nil
+        )
+    }
+
+    private func names(_ results: [SearchResult], terms: [String]) -> [String] {
+        RelevanceRanker.rank(results, terms: terms, now: now).map(\.name)
+    }
+
+    @Test func nameMatchBeatsRecentContentOnlyMatch() {
+        let results = [result("Notizen.txt", openedDaysAgo: 1), result("Stromrechnung.pdf", openedDaysAgo: 900)]
+        #expect(names(results, terms: ["rechnung"]) == ["Stromrechnung.pdf", "Notizen.txt"])
+    }
+
+    @Test func betterNameMatchComesFirst() {
+        let results = [
+            result("Stromrechnung.pdf"), result("Alte Rechnungen.pdf"),
+            result("Rechnung 2026.pdf"), result("rechnung.pdf"),
+        ]
+        #expect(names(results, terms: ["Rechnung"]) == ["rechnung.pdf", "Rechnung 2026.pdf", "Alte Rechnungen.pdf", "Stromrechnung.pdf"])
+    }
+
+    @Test func matchingIgnoresCaseAndDiacritics() {
+        let results = [result("Notizen.txt"), result("Übersicht Gebühren.pdf")]
+        #expect(names(results, terms: ["gebuhren"]).first == "Übersicht Gebühren.pdf")
+    }
+
+    @Test func recencyBreaksTiesBetweenEqualMatches() {
+        let results = [result("Rechnung A.pdf", openedDaysAgo: 400), result("Rechnung B.pdf", openedDaysAgo: 3)]
+        #expect(names(results, terms: ["rechnung"]) == ["Rechnung B.pdf", "Rechnung A.pdf"])
+    }
+
+    @Test func withoutTermsMostRecentComesFirst() {
+        let results = [result("a.txt", openedDaysAgo: 50), result("b.txt"), result("c.txt", openedDaysAgo: 2)]
+        #expect(names(results, terms: []) == ["c.txt", "a.txt", "b.txt"])
+    }
 }
 
 @Suite("FileSearchQuery")
 struct FileSearchQueryTests {
     private func query(
-        keywords: [String] = [], nameKeywords: [String] = [], extensions: [String] = [],
+        keywords: [String] = [], terms: [SearchTerm] = [], nameKeywords: [String] = [], extensions: [String] = [],
         contentKind: ContentKind = .any, days: Int = 0, dateField: DateField = .modified,
         scope: String = "", tags: [TagColor] = []
     ) -> FileSearchQuery {
         FileSearchQuery(
-            keywords: keywords, nameKeywords: nameKeywords, extensions: extensions,
+            keywords: keywords.map { SearchTerm(term: $0, alternatives: []) } + terms,
+            nameKeywords: nameKeywords, extensions: extensions,
             contentKind: contentKind, days: days, dateField: dateField, scope: scope, tags: tags
         )
     }
 
+    /// Die Zeilen auf oberster Ebene (Gruppen ausgelassen).
+    private func rows(_ group: CriterionGroup) -> [SearchCriterion] {
+        group.items.compactMap { if case .criterion(let criterion) = $0 { criterion } else { nil } }
+    }
+
     @Test func invoicesFromLastMonthBecomeThreeRows() {
-        let rows = query(keywords: ["Rechnung"], extensions: ["PDF"], days: 31).normalized().criteria
+        let rows = rows(query(keywords: ["Rechnung"], extensions: ["PDF"], days: 31).normalized().filter)
         #expect(rows.map(\.attribute) == [.anyText, .contentKind, .modified])
         #expect(rows[1].contentKind == .pdf)
         #expect(rows[2].value == "31")
@@ -249,7 +339,7 @@ struct FileSearchQueryTests {
 
     @Test func normalizationDropsExtensionsAndFillerFromKeywords() {
         let normalized = query(keywords: ["pdf", "Dateien", "Steuer"], extensions: [".pdf"], contentKind: .document).normalized()
-        #expect(normalized.keywords == ["Steuer"])
+        #expect(normalized.keywords.map(\.term) == ["Steuer"])
         #expect(normalized.extensions.isEmpty)
         #expect(normalized.contentKind == .pdf)
     }
@@ -258,11 +348,81 @@ struct FileSearchQueryTests {
         let normalized = query(extensions: ["pdf", "docx"], contentKind: .document).normalized()
         #expect(normalized.extensions == ["docx", "pdf"])
         #expect(normalized.contentKind == .any)
-        #expect(normalized.criteria.map(\.attribute) == [.fileExtension])
+        #expect(rows(normalized.filter).map(\.attribute) == [.fileExtension])
     }
 
     @Test func openedDateMapsToLastOpened() {
-        let rows = query(days: 2, dateField: .opened).criteria
+        let rows = rows(query(days: 2, dateField: .opened).filter)
         #expect(rows.first?.attribute == .lastOpened)
+    }
+
+    @Test func alternativesBecomeOrGroup() throws {
+        let filter = query(terms: [SearchTerm(term: "Rechnung", alternatives: ["Beleg", "Invoice"])], extensions: ["pdf"])
+            .normalized().filter
+        guard case .group(let group) = filter.items.first else { Issue.record("ODER-Gruppe erwartet"); return }
+        let alternatives = rows(group)
+        #expect(alternatives.map(\.value) == ["Rechnung", "Beleg", "Invoice"])
+        #expect(alternatives.map(\.connector) == [.and, .or, .or])
+        #expect(alternatives.allSatisfy { $0.attribute == .anyText })
+        let queryString = try #require(PredicateBuilder.queryString(filter: filter))
+        #expect(PredicateBuilder.predicate(from: queryString) != nil)
+    }
+
+    @Test func termWithoutAlternativesStaysSingleRow() {
+        let filter = query(keywords: ["Kubernetes"]).filter
+        #expect(rows(filter).map(\.value) == ["Kubernetes"])
+    }
+
+    @Test func inventedDetailsAreDropped() {
+        // Beobachtete Modellantwort auf „Rezepte mit Kartoffeln“.
+        let model = query(
+            terms: [
+                SearchTerm(term: "Kartoffeln", alternatives: ["Knollen"]),
+                SearchTerm(term: "Rezept", alternatives: ["recipe"]),
+                SearchTerm(term: "kochen", alternatives: ["cooking"]),
+            ],
+            nameKeywords: ["rezept"], contentKind: .pdf, tags: [.red]
+        )
+        let normalized = model.normalized(request: "Rezepte mit Kartoffeln")
+        #expect(normalized.keywords.map(\.term) == ["Kartoffeln", "Rezept"])
+        #expect(normalized.keywords.first?.alternatives == ["Knollen"])
+        #expect(normalized.nameKeywords.isEmpty)
+        #expect(normalized.contentKind == .any)
+        #expect(normalized.tags.isEmpty)
+    }
+
+    @Test func inventedTopicsAreDropped() {
+        let model = query(terms: [
+            SearchTerm(term: "Machine Learning", alternatives: ["maschinelles Lernen"]),
+            SearchTerm(term: "Artificial Intelligence", alternatives: []),
+            SearchTerm(term: "Computer Vision", alternatives: []),
+        ], extensions: ["pdf"])
+        let normalized = model.normalized(request: "PDFs über Machine Learning")
+        #expect(normalized.keywords.map(\.term) == ["Machine Learning"])
+        #expect(normalized.contentKind == .pdf)
+    }
+
+    @Test func mentionedDetailsAreKept() {
+        #expect(query(keywords: ["Rechnung"]).normalized(request: "Stromrechnungen 2025").keywords.map(\.term) == ["Rechnung"])
+        #expect(query(nameKeywords: ["Budget 2026"]).normalized(request: "Datei namens Budget 2026").nameKeywords == ["Budget 2026"])
+        #expect(query(extensions: ["docx", "doc"]).normalized(request: "Word-Dateien von gestern").extensions == ["doc", "docx"])
+        #expect(query(extensions: ["key", "pptx"]).normalized(request: "Präsentationen im Downloads-Ordner").extensions == ["key", "pptx"])
+        #expect(query(tags: [.red]).normalized(request: "Dateien mit rotem Tag").tags == [.red])
+        #expect(query(tags: [.green]).normalized(request: "grün markierte Dateien").tags == [.green])
+    }
+
+    @Test func scopeIsKeptOnlyWhenMentioned() {
+        #expect(query(scope: "Downloads").normalized(request: "Präsentationen im Downloads-Ordner").scope == "Downloads")
+        #expect(query(scope: "Downloads").normalized(request: "PDFs über Rechnungen").scope.isEmpty)
+    }
+
+    @Test func unmentionedExtensionIsDropped() {
+        #expect(query(extensions: ["pdf"]).normalized(request: "Fotos vom Urlaub").extensions.isEmpty)
+    }
+
+    @Test func alternativesAreCleanedUp() {
+        let term = SearchTerm(term: "Rechnung", alternatives: ["rechnung", " Beleg ", "beleg", "ML", "pdf", "Invoice", "Quittung", "Faktura"])
+        let normalized = query(terms: [term], extensions: ["pdf"]).normalized()
+        #expect(normalized.keywords.first?.alternatives == ["Beleg", "Invoice", "Quittung"])
     }
 }

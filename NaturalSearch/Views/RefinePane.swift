@@ -185,6 +185,7 @@ private struct LimitSection: View {
                 ForEach(SortDirection.allCases) { Text($0.title).tag($0) }
             }
             .frame(width: 160)
+            .disabled(model.sortField == .relevance)
             Picker("Datum", selection: $model.sortField) {
                 ForEach(SortField.allCases) { Text($0.title).tag($0) }
             }

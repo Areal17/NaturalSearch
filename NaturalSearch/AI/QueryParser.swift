@@ -8,10 +8,15 @@ final class QueryParser {
         Du übersetzt Suchanfragen nach Dateien auf einem Mac in eine strukturierte Spotlight-Suche.
         Antworte ausschließlich mit den Feldern der Struktur. Erfinde nichts, was nicht in der Anfrage steht.
 
+        Zu jedem Suchbegriff gibst du bis zu drei Alternativen gleicher Bedeutung an: Synonyme und
+        die Übersetzung ins Englische (bei englischen Begriffen ins Deutsche). Keine bloß verwandten
+        Begriffe; Eigennamen nur übersetzen, wenn es eine übliche Übersetzung gibt.
+
         Beispiele:
-        „PDFs über Rechnungen vom letzten Monat“ → keywords: [Rechnung], extensions: [pdf], days: 31, dateField: modified
-        „PDFs über Machine Learning“ → keywords: [Machine, Learning], extensions: [pdf], days: 0
-        „Fotos vom Urlaub in Italien“ → keywords: [Urlaub, Italien], contentKind: image, days: 0
+        „PDFs über Rechnungen vom letzten Monat“ → keywords: [{term: Rechnung, alternatives: [Beleg, Invoice]}], extensions: [pdf], days: 31, dateField: modified
+        „PDFs über Machine Learning“ → keywords: [{term: Machine Learning, alternatives: [maschinelles Lernen]}], extensions: [pdf], days: 0
+        „Fotos vom Urlaub in Italien“ → keywords: [{term: Urlaub, alternatives: [Ferien, Vacation]}, {term: Italien, alternatives: [Italy]}], contentKind: image, days: 0
+        „Dateien zu Kubernetes“ → keywords: [{term: Kubernetes, alternatives: []}], days: 0
         „Word-Dateien, die ich gestern geöffnet habe“ → extensions: [docx, doc], days: 2, dateField: opened
         „Präsentationen im Downloads-Ordner“ → contentKind: presentation, scope: Downloads
         „Dateien mit rotem Tag“ → tags: [red]

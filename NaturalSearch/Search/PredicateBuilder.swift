@@ -126,7 +126,7 @@ enum PredicateBuilder {
         let value = criterion.value.trimmingCharacters(in: .whitespaces)
         switch criterion.attribute {
         case .anyText:
-            return wordClause([Key.displayName, Key.textContent], words: value, criterion: criterion)
+            return anyTextClause(words: value, criterion: criterion)
         case .textContent where criterion.op != .contains && criterion.op != .notContains:
             return wordClause([Key.textContent], words: value, criterion: criterion)
         case .name, .textContent, .author, .comment:
@@ -161,6 +161,30 @@ enum PredicateBuilder {
         let parts = words.split(whereSeparator: \.isWhitespace).map { word in
             let pattern = escape(String(word)) + (prefix ? "*" : "")
             return compare(keys, pattern: pattern, modifiers: modifiers(criterion, wordBased: true), negated: criterion.isNegated)
+        }
+        guard !parts.isEmpty else { return nil }
+        return parts.count == 1 ? parts[0] : parts.map { "(\($0))" }.joined(separator: " && ")
+    }
+
+    /// Wie `wordClause` über Name und Inhalt, aber im Namen auch mitten im Wort
+    /// („Rechnung“ findet „Stromrechnung.pdf“). Im Inhalt bleibt es beim Wortanfang – eine
+    /// Teilwortsuche im Volltext wäre langsam und ungenau. Kurze Wörter (< 4 Zeichen) suchen
+    /// auch im Namen nur am Wortanfang, damit „ml“ nicht „html“ trifft.
+    private static func anyTextClause(words: String, criterion: SearchCriterion) -> String? {
+        let prefix = criterion.op == .containsPrefixes
+        let wordModifiers = modifiers(criterion, wordBased: true)
+        let parts = words.split(whereSeparator: \.isWhitespace).map { word in
+            let escaped = escape(String(word))
+            let contentPattern = escaped + (prefix ? "*" : "")
+            let inName = prefix && word.count >= 4
+            let name = compare(
+                [Key.displayName],
+                pattern: inName ? "*\(escaped)*" : contentPattern,
+                modifiers: inName ? modifiers(criterion, wordBased: false) : wordModifiers,
+                negated: criterion.isNegated
+            )
+            let content = compare([Key.textContent], pattern: contentPattern, modifiers: wordModifiers, negated: criterion.isNegated)
+            return [name, content].joined(separator: criterion.isNegated ? " && " : " || ")
         }
         guard !parts.isEmpty else { return nil }
         return parts.count == 1 ? parts[0] : parts.map { "(\($0))" }.joined(separator: " && ")

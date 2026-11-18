@@ -23,7 +23,7 @@ final class SearchModel {
     var tags: Set<TagColor> = []
     var limit: ResultLimit = .hundredThousand
     var sortDirection: SortDirection = .newest
-    var sortField: SortField = .opened
+    var sortField: SortField = .relevance
 
     // Resultate
     var selection: Set<SearchResult.ID> = []
@@ -113,8 +113,10 @@ final class SearchModel {
 
     /// Überträgt die Modellantwort in die sichtbaren Filter.
     func apply(_ query: FileSearchQuery, fallbackText: String) {
-        let rows = query.criteria
-        filter = CriterionGroup(criteria: rows.isEmpty ? [SearchCriterion(.anyText, .containsPrefixes, value: fallbackText)] : rows)
+        let parsed = query.filter
+        filter = parsed.items.isEmpty
+            ? CriterionGroup(criteria: [SearchCriterion(.anyText, .containsPrefixes, value: fallbackText)])
+            : parsed
         tags = Set(query.tags)
         if query.days > 0 { sortField = query.dateField.sortField }
         if !query.scope.isEmpty {
@@ -143,7 +145,8 @@ final class SearchModel {
             scopes: scopes,
             excludedPaths: locations.excludedPaths,
             sortKey: sortField.spotlightKey,
-            ascending: sortDirection == .oldest,
+            // Relevanz hat keine Richtung: Spotlight liefert dafür immer die zuletzt benutzten zuerst.
+            ascending: sortField != .relevance && sortDirection == .oldest,
             limit: limit.rawValue
         ))
     }
@@ -262,9 +265,16 @@ final class SearchModel {
         NSPasteboard.general.setString(queryString ?? "", forType: .string)
     }
 
+    /// Eine Spaltensortierung in der Tabelle hat Vorrang, sonst gilt die gewählte Sortierung.
     private func refreshDisplayedResults() {
         let results = spotlight.results
-        displayedResults = tableSortOrder.isEmpty ? results : results.sorted(using: tableSortOrder)
+        if !tableSortOrder.isEmpty {
+            displayedResults = results.sorted(using: tableSortOrder)
+        } else if sortField == .relevance {
+            displayedResults = RelevanceRanker.rank(results, terms: filter.positiveTextTerms)
+        } else {
+            displayedResults = results
+        }
         let valid = Set(displayedResults.map(\.id))
         if !selection.isSubset(of: valid) { selection.formIntersection(valid) }
     }

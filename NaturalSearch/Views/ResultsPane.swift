@@ -29,13 +29,16 @@ struct ResultsPane: View {
     private var sortMenu: some View {
         @Bindable var model = model
         return Menu {
-            Picker("Spotlight sortiert nach", selection: $model.sortField) {
-                ForEach(SortField.allCases) { Text("Zuletzt \($0.title)").tag($0) }
+            Picker("Sortiert nach", selection: $model.sortField) {
+                ForEach(SortField.allCases) { field in
+                    Text(field == .relevance ? field.title : "Zuletzt \(field.title)").tag(field)
+                }
             }
             Picker("Reihenfolge", selection: $model.sortDirection) {
                 Text("Neueste zuerst").tag(SortDirection.newest)
                 Text("Älteste zuerst").tag(SortDirection.oldest)
             }
+            .disabled(model.sortField == .relevance)
             Divider()
             Button("Spaltensortierung aufheben") { model.tableSortOrder = [] }
                 .disabled(model.tableSortOrder.isEmpty)

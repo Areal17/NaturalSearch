@@ -32,6 +32,22 @@ struct CriterionGroup: Identifiable, Hashable, Sendable {
         items.reduce(0) { $0 + $1.criterionCount }
     }
 
+    /// Wörter aus Textzeilen, nach denen gesucht wird (für die Relevanz-Sortierung).
+    /// Ausschließende und umgekehrte Zeilen sowie umgekehrte Gruppen zählen nicht.
+    var positiveTextTerms: [String] {
+        guard !isNegated else { return [] }
+        return items.flatMap { item -> [String] in
+            switch item {
+            case .group(let group):
+                return group.positiveTextTerms
+            case .criterion(let criterion):
+                let isText = [.anyText, .name, .textContent].contains(criterion.attribute)
+                guard isText, !criterion.isEmpty, !criterion.isNegated, !criterion.op.isExclusive else { return [] }
+                return criterion.value.split(whereSeparator: \.isWhitespace).map(String.init)
+            }
+        }
+    }
+
     // MARK: - Bearbeiten
 
     /// Sucht rekursiv die Liste, die das Element `id` enthält, und wendet `transform` darauf an.

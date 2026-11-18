@@ -14,6 +14,9 @@ struct SearchResult: Identifiable, Hashable, Sendable {
     let size: Int64?
     let tags: [String]
     let comment: String?
+    /// Aufbereiteter Dateiname für `RelevanceRanker`. Wird einmal beim Einlesen berechnet und
+    /// liegt damit im Zwischenspeicher von `SpotlightSearch`; leer bei von Hand gebauten Treffern.
+    var rankingName = ""
 
     var folderPath: String {
         let folder = url.deletingLastPathComponent().path
@@ -70,6 +73,7 @@ extension SearchResult {
         size = (value(NSMetadataItemFSSizeKey) as NSNumber?)?.int64Value
         tags = value("kMDItemUserTags") ?? []
         comment = value("kMDItemFinderComment")
+        rankingName = RelevanceRanker.rankingName(for: name)
     }
 
     /// Lokalisierte Art wie im Finder, z. B. „PDF-Dokument“.

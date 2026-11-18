@@ -4,8 +4,8 @@ import FoundationModels
 /// Strukturierte Suche, die das On-Device-Modell aus einer natürlichsprachlichen Anfrage erzeugt.
 @Generable(description: "Strukturierte Spotlight-Suche nach Dateien auf einem Mac")
 struct FileSearchQuery: Equatable, Sendable {
-    @Guide(description: "Inhaltliche Suchbegriffe in der Grundform (Singular), z. B. Rechnung, Steuer, Urlaub. Keine Dateitypen, Zeitangaben, Ortsangaben oder Füllwörter wie Datei, Dokument, über.", .maximumCount(4))
-    var keywords: [String]
+    @Guide(description: "Inhaltliche Suchbegriffe, die in der Anfrage vorkommen, z. B. Rechnung, Steuer, Urlaub. Keine weiteren Themen erfinden. Keine Dateitypen, Zeitangaben, Ortsangaben oder Füllwörter wie Datei, Dokument, über.", .maximumCount(4))
+    var keywords: [SearchTerm]
 
     @Guide(description: "Begriffe, die im Dateinamen stehen müssen. Nur füllen, wenn ausdrücklich nach dem Namen gefragt wird, sonst leer.", .maximumCount(3))
     var nameKeywords: [String]
@@ -27,6 +27,16 @@ struct FileSearchQuery: Equatable, Sendable {
 
     @Guide(description: "Finder-Farbtags, nur wenn ausdrücklich nach Tags oder Farbmarkierungen gefragt wird.", .maximumCount(3))
     var tags: [TagColor]
+}
+
+/// Ein Suchbegriff mit gleichbedeutenden Alternativen; gefunden wird, was einen davon enthält.
+@Generable
+struct SearchTerm: Equatable, Sendable {
+    @Guide(description: "Suchbegriff in der Grundform (Singular)")
+    var term: String
+
+    @Guide(description: "Bis zu 3 Begriffe gleicher Bedeutung: Synonyme und die Übersetzung ins Englische bzw. Deutsche, in der Grundform. Leer, wenn es keine sinnvollen gibt.", .maximumCount(3))
+    var alternatives: [String]
 }
 
 @Generable
@@ -52,6 +62,59 @@ extension FileSearchQuery {
         "november", "dezember",
     ]
 
+    /// Wörter, an denen eine Endung in der Anfrage erkennbar ist („Word-Dateien“ → docx).
+    /// Die Endung selbst („PDFs“) zählt immer. Gefaltet, also ohne Umlaute.
+    private static let extensionHints: [String: [String]] = [
+        "doc": ["word"], "docx": ["word"],
+        "xls": ["excel"], "xlsx": ["excel"], "numbers": ["numbers"],
+        "ppt": ["powerpoint", "prasentation"], "pptx": ["powerpoint", "prasentation"], "key": ["keynote", "prasentation"],
+        "jpg": ["foto", "bild", "photo"], "jpeg": ["foto", "bild", "photo"], "heic": ["foto", "bild", "photo"],
+        "png": ["bild", "screenshot", "grafik"],
+        "mov": ["video", "film"], "mp4": ["video", "film"],
+        "txt": ["text"], "md": ["markdown", "notiz"],
+    ]
+
+    /// Wortteile, mit denen jemand ausdrücklich nach dem Dateinamen fragt.
+    private static let nameHints = ["name", "heißt", "heisst", "titel", "called", "title"]
+
+    /// Wörter ohne Groß-/Kleinschreibung und Akzente, an Satzzeichen getrennt.
+    static func foldedWords(_ text: String) -> [String] {
+        text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil)
+            .split { !$0.isLetter && !$0.isNumber }
+            .map(String.init)
+    }
+
+    /// `true`, wenn ein Wort aus `phrase` in der Anfrage steckt – auch gebeugt oder als Teil
+    /// eines zusammengesetzten Worts („Rechnung“ in „Stromrechnungen“).
+    static func isMentioned(_ phrase: String, in requestWords: [String]) -> Bool {
+        foldedWords(phrase).contains { word in
+            let stem = String(word.prefix(5))
+            return requestWords.contains { $0.contains(stem) }
+        }
+    }
+
+    /// Verwirft, was das kleine Modell ohne Anhaltspunkt in der Anfrage ergänzt hat:
+    /// zusätzliche Themen, Namensbegriffe, Endungen, „PDF“, Farbtags und Orte. Ein erfundener
+    /// Ort wäre besonders lästig, weil er die gespeicherte Auswahl unter „Orte“ ersetzt.
+    private func grounded(in request: String) -> FileSearchQuery {
+        let words = Self.foldedWords(request)
+        var copy = self
+        copy.keywords = keywords.filter { Self.isMentioned($0.term, in: words) }
+        let asksForName = words.contains { word in Self.nameHints.contains { word.contains($0) } }
+        copy.nameKeywords = asksForName ? nameKeywords.filter { Self.isMentioned($0, in: words) } : []
+        copy.extensions = extensions.filter { ext in
+            words.contains { $0.hasPrefix(ext) }
+                || (Self.extensionHints[ext] ?? []).contains { hint in words.contains { $0.contains(hint) } }
+        }
+        if contentKind == .pdf, !words.contains(where: { $0.hasPrefix("pdf") }) { copy.contentKind = .any }
+        copy.tags = tags.filter { tag in
+            let names = Self.foldedWords(tag.title) + [tag.rawValue]
+            return words.contains { word in names.contains { word.hasPrefix($0) } }
+        }
+        if !scope.isEmpty, !Self.isMentioned(scope, in: words) { copy.scope = "" }
+        return copy
+    }
+
     /// `true`, wenn die Anfrage überhaupt einen Zeitraum nennt (Wort, Monat oder Jahreszahl).
     static func mentionsTime(_ request: String) -> Bool {
         let words = request.lowercased().split { !$0.isLetter && !$0.isNumber }.map(String.init)
@@ -70,10 +133,9 @@ extension FileSearchQuery {
             .filter { !$0.isEmpty }
             .sorted()
         let blocked = Self.fillerWords.union(copy.extensions)
-        copy.keywords = keywords
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty && !blocked.contains($0.lowercased()) }
+        copy.keywords = keywords.compactMap { Self.normalized($0, blocked: blocked) }
         copy.nameKeywords = nameKeywords.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        if let request { copy = copy.grounded(in: request) }
         if copy.extensions == ["pdf"] {
             // Nur PDF gesucht: als Inhaltsart „PDF“ zeigen; sie prüft den Dateityp und findet
             // auch PDFs ohne bzw. mit abweichender Endung.
@@ -85,27 +147,47 @@ extension FileSearchQuery {
         }
         // Das Modell setzt gern days = 1, obwohl die Anfrage keinen Zeitraum nennt.
         if let request, copy.days > 0, !Self.mentionsTime(request) { copy.days = 0 }
-        copy.scope = scope.trimmingCharacters(in: .whitespaces)
+        copy.scope = copy.scope.trimmingCharacters(in: .whitespaces)
         return copy
     }
 
-    /// Übersetzt die Modellantwort in editierbare Zeilen für „Verfeinern“.
-    var criteria: [SearchCriterion] {
-        var rows: [SearchCriterion] = []
-        if !keywords.isEmpty {
-            rows.append(SearchCriterion(.anyText, .containsPrefixes, value: keywords.joined(separator: " ")))
+    /// Bereinigt einen Begriff: Füllwörter und Endungen fallen weg, Alternativen werden ohne
+    /// Dubletten (auch gegenüber dem Begriff selbst) auf drei gekappt. Vom Modell erfundene
+    /// Kürzel unter drei Zeichen („ML“) werden verworfen – als Präfix treffen sie zu viel („500 ml“).
+    private static func normalized(_ keyword: SearchTerm, blocked: Set<String>) -> SearchTerm? {
+        let term = keyword.term.trimmingCharacters(in: .whitespaces)
+        guard !term.isEmpty, !blocked.contains(term.lowercased()) else { return nil }
+        var seen: Set<String> = [term.lowercased()]
+        let alternatives = keyword.alternatives
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { $0.count >= 3 && !blocked.contains($0.lowercased()) && seen.insert($0.lowercased()).inserted }
+        return SearchTerm(term: term, alternatives: Array(alternatives.prefix(3)))
+    }
+
+    /// Übersetzt die Modellantwort in editierbare Zeilen für „Verfeinern“. Ein Begriff mit
+    /// Alternativen wird zur Gruppe aus ODER-verknüpften Zeilen: `(Rechnung oder Beleg oder Invoice)`.
+    var filter: CriterionGroup {
+        var items: [CriterionItem] = keywords.map { keyword in
+            let row = SearchCriterion(.anyText, .containsPrefixes, value: keyword.term)
+            guard !keyword.alternatives.isEmpty else { return .criterion(row) }
+            let alternatives = keyword.alternatives.map { alternative in
+                var row = SearchCriterion(.anyText, .containsPrefixes, value: alternative)
+                row.connector = .or
+                return CriterionItem.criterion(row)
+            }
+            return .group(CriterionGroup([.criterion(row)] + alternatives))
         }
-        rows += nameKeywords.map { SearchCriterion(.name, .contains, value: $0) }
+        items += nameKeywords.map { .criterion(SearchCriterion(.name, .contains, value: $0)) }
         if !extensions.isEmpty {
-            rows.append(SearchCriterion(.fileExtension, value: extensions.joined(separator: ", ")))
+            items.append(.criterion(SearchCriterion(.fileExtension, value: extensions.joined(separator: ", "))))
         }
         if contentKind != .any {
-            rows.append(SearchCriterion(.contentKind, contentKind: contentKind))
+            items.append(.criterion(SearchCriterion(.contentKind, contentKind: contentKind)))
         }
         if days > 0 {
-            rows.append(SearchCriterion(dateField.attribute, .withinLastDays, value: String(days)))
+            items.append(.criterion(SearchCriterion(dateField.attribute, .withinLastDays, value: String(days))))
         }
-        return rows
+        return CriterionGroup(items)
     }
 }
 

@@ -52,6 +52,8 @@ enum SortDirection: String, CaseIterable, Identifiable, Sendable {
 }
 
 enum SortField: String, CaseIterable, Identifiable, Sendable {
+    /// Treffer im Dateinamen zuerst, kürzlich benutzte Dateien mit Bonus (siehe `RelevanceRanker`).
+    case relevance
     case opened
     case modified
     case created
@@ -61,6 +63,7 @@ enum SortField: String, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
+        case .relevance: "Relevanz"
         case .opened: "geöffnet"
         case .modified: "geändert"
         case .created: "erstellt"
@@ -68,9 +71,11 @@ enum SortField: String, CaseIterable, Identifiable, Sendable {
         }
     }
 
+    /// Bei Relevanz sortiert Spotlight nach Nutzung vor, damit beim Kappen durch das Limit
+    /// die zuletzt benutzten Dateien erhalten bleiben; die eigentliche Reihenfolge entsteht lokal.
     var spotlightKey: String {
         switch self {
-        case .opened: "kMDItemLastUsedDate"
+        case .relevance, .opened: "kMDItemLastUsedDate"
         case .modified: "kMDItemContentModificationDate"
         case .created: "kMDItemContentCreationDate"
         case .added: "kMDItemDateAdded"
